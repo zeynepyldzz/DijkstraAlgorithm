@@ -1,95 +1,99 @@
 #include <limits.h>
 #include <iostream>
-#include <stdio.h>
-#define V 9    // Number of vertices in the graph
+#define V 9  // Number of vertices (nodes) fixed to 9
 using namespace std;
-// A helper function to find the vertex with the minimum distance value
-// set of vertices that are not yet included in the shortest path tree
+
+// Function to find the vertex with minimum distance value, from
+// the set of vertices not yet included in shortest path tree
 int minDistance(int dist[], bool sptSet[])
 {
-	// Initialize minimum value
-	int min = INT_MAX, min_index;
+    int min = INT_MAX, min_index;
 
-	for (int v = 0; v < V; v++)
-		if (sptSet[v] == false && dist[v] <= min)
-			min = dist[v], min_index = v;
+    for (int v = 0; v < V; v++)
+        if (sptSet[v] == false && dist[v] <= min)
+            min = dist[v], min_index = v;
 
-	return min_index;
+    return min_index;
 }
-// A helper function to print the generated distance array
+
+// Function to print the constructed distance array
 int printSolution(int dist[], int n)
 {
-	printf("Vertex Distance from Source\n");
-	for (int i = 0; i < V; i++)
-		printf("%d \t\t %d\n", i, dist[i]);
+    for (int i = 0; i < V; i++) {
+        printf("Shortest time from node 8 to %d is: %d minutes\n", i, dist[i]);
+        if(dist[i] < 0) {
+            cout << "Time cannot be negative!!" << endl;
+            exit(0);
+        }
+    }
 }
 
-// Function that implements Dijkstra's single-source shortest path algorithm
-// for a graph represented using adjacency matrix representation
 void dijkstra(int graph[V][V], int src)
 {
-	int dist[V]; // Output array. dist[i] holds the shortest one
-// distance from src to i
+    int dist[V];  // The output array. dist[i] will hold the shortest distance from src to i
 
-	bool sptSet[V]; // sptSet[i] is true if vertex i is included in the shortest 
-	// path tree or shortest distance from src to i is terminated
+    bool sptSet[V];  // sptSet[i] will be true if vertex i is included in shortest path tree
 
+    // Initialize all distances as INFINITE and sptSet[] as false
+    for (int i = 0; i < V; i++)
+        dist[i] = INT_MAX, sptSet[i] = false;
 
-	for (int i = 0; i < V; i++)
-		dist[i] = INT_MAX, sptSet[i] = false;
+    // Distance of source vertex from itself is always 0
+    dist[src] = 0;
 
-// Distance of source vertex from itself is always 0	dist[src] = 0;
+    // Find shortest path for all vertices
+    for (int count = 0; count < V - 1; count++) {
+        // Pick the minimum distance vertex from the set of vertices not yet processed
+        int u = minDistance(dist, sptSet);
 
-	// Find the shortest path for all corners
-	for (int count = 0; count < V - 1; count++) {
-		// select minimum distance vertex from set of non-existent vertices
-// just processed. u is always equal to src in the first iteration.
-		int u = minDistance(dist, sptSet);
-// Initialize all distances to INFINITE and stpSet[] to false
-// Mark the selected vertex as processed
-		sptSet[u] = true;
+        // Mark the picked vertex as processed
+        sptSet[u] = true;
 
-		// Update the dist value of adjacent vertices of the selected vertex.
-		for (int v = 0; v < V; v++)
+        // Update dist value of the adjacent vertices of the picked vertex.
+        for (int v = 0; v < V; v++)
 
-		// update dist[v] only if not in sptSet, if there is an edge from there
-// total weight of path from u to v and src from v to u
-// less than current value of dist[v]
-			if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
-				&& dist[u] + graph[u][v] < dist[v])
-				dist[v] = dist[u] + graph[u][v];
-	}
+            // Update dist[v] only if it is not in sptSet, there is an edge from
+            // u to v, and total weight of path from src to v through u is smaller
+            // than current value of dist[v]
+            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
+                && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
 
-	// print the generated distance array
-	printSolution(dist, V);
+    // Print the constructed distance array
+    printSolution(dist, V);
 }
 
-// driver program to test the above function
 int main()
 {
-		string satir1; string satir2; string satir3;string satir4;string satir5;string satir6;string satir7;
-		string sutun1;string sutun2;string sutun3;string sutun4;string sutun5;string sutun6;string sutun7;
-	    satir1=sutun1="Home";
-	    satir2=sutun2="Beykoz Univercity";
-	    satir3=sutun3="Atasehir";
-	    satir4=sutun4="Kadikoy";
-	    satir5=sutun5="Uskudar";
-	    satir6=sutun6="Tepeustu";
-	    satir7=sutun7="Mecidiyekoy";
+    // Naming nodes for better understanding (not used in calculations)
+    string node0 = "Gebze";
+    string node1 = "Kavacik";
+    string node2 = "Dudullu";
+    string node3 = "Hacihalil";
+    string node4 = "Kadikoy";
+    string node5 = "Umraniye";
+    string node6 = "Tuzla";
+    string node7 = "Darica";
+    string node8 = "Uskudar";
 
-	
-	int graph[V][V] = { { 0 , 57, 54, 13, 76, 87, 13,23,25},
-						{ 25, 0, 55, 35, 20, 20, 30 },
-						{ 15, 55, 0, 20, 35,20, 53 },
-						{ 30, 35,20, 0, 15, 35, 33 },
-						{ 24,20, 35, 15, 0, 29, 18 },
-						{ 5, 20, 20, 35, 29, 0, 47 },
-						{ 42,30, 53, 33, 18, 47, 0 }
-						 };
-    
-	dijkstra(graph, 0);
+    cout << endl;
+    cout << "Gebze: 0\nKavacik: 1\nDudullu: 2\nHacihalil: 3\nKadikoy: 4\nUmraniye: 5\nTuzla: 6\nDarica: 7\nUskudar: 8\n\n";
 
+    // Distance adjacency matrix between nodes
+    int graph[V][V] = { {  0 , 51, 54, 13, 73, 38, 13, 23, 25},
+                        { 51,  0, 30, 44, 22, 13, 53, 79, 26},
+                        { 54, 30,  0, 41, 52, 43, 67, 73, 56},
+                        { 13, 44, 41,  0, 66, 57, 26, 32, 87},
+                        { 73, 22, 52, 66,  0, 35, 75, 57, 48},
+                        { 38, 13, 43, 57, 35,  0, 66, 68, 13},
+                        { 13, 53, 67, 26, 75, 66,  0, 32, 87},
+                        { 23, 79, 73, 32, 57, 68, 32,  0, 55},
+                        { 25, 26, 56, 87, 48, 13, 87, 55,  0}
+                      };
 
-	return 0;
+    dijkstra(graph, 8);  // Start from node 8 (Uskudar)
+
+    return 0;
 }
 
