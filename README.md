@@ -2,6 +2,8 @@
 
 This project implements Dijkstra's algorithm to find the shortest path from a single source node to all other nodes in a weighted graph. The graph is represented using an adjacency matrix.
 
+![image](https://github.com/user-attachments/assets/609568c6-cdb4-4485-89de-5e505a0043bc)
+
 ## Features
 
 - Calculates shortest distances from a given source node.
@@ -40,5 +42,3 @@ This project is open-source and free to use.
 
 
 
-
-![image](https://github.com/user-attachments/assets/f4592af4-c6ae-4709-8b1e-61dda7a88705)
