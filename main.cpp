@@ -1,13 +1,13 @@
 #include <limits.h>
 #include <iostream>
 #include <stdio.h>
-#define V 9    // Grafikteki köþe sayýsý
+#define V 9    // Number of vertices in the graph
 using namespace std;
-// Minimum mesafe deðerine sahip tepe noktasýný bulmak için bir yardýmcý iþlev
-// en kýsa yol aðacýna henüz dahil olmayan köþe noktalarý kümesi
+// A helper function to find the vertex with the minimum distance value
+// set of vertices that are not yet included in the shortest path tree
 int minDistance(int dist[], bool sptSet[])
 {
-	// Minimum deðeri baþlat
+	// Initialize minimum value
 	int min = INT_MAX, min_index;
 
 	for (int v = 0; v < V; v++)
@@ -16,7 +16,7 @@ int minDistance(int dist[], bool sptSet[])
 
 	return min_index;
 }
-// Oluþturulan mesafe dizisini yazdýrmak için bir yardýmcý iþlev
+// A helper function to print the generated distance array
 int printSolution(int dist[], int n)
 {
 	printf("Vertex Distance from Source\n");
@@ -24,54 +24,53 @@ int printSolution(int dist[], int n)
 		printf("%d \t\t %d\n", i, dist[i]);
 }
 
-// Dijkstra'nýn tek kaynaklý en kýsa yol algoritmasýný uygulayan iþlev
-// bitiþik matris gösterimi kullanýlarak temsil edilen bir grafik için
+// Function that implements Dijkstra's single-source shortest path algorithm
+// for a graph represented using adjacency matrix representation
 void dijkstra(int graph[V][V], int src)
 {
-	int dist[V]; // Çýkýþ dizisi. dist[i] en kýsa olaný tutar
-// src'den i'ye olan mesafe
+	int dist[V]; // Output array. dist[i] holds the shortest one
+// distance from src to i
 
-	bool sptSet[V]; // sptSet[i], i köþesi en kýsaya dahil edilmiþse doðru olur
-// yol aðacý veya src'den i'ye olan en kýsa mesafe sonlandýrýlýr
+	bool sptSet[V]; // sptSet[i] is true if vertex i is included in the shortest 
+	// path tree or shortest distance from src to i is terminated
 
 
 	for (int i = 0; i < V; i++)
 		dist[i] = INT_MAX, sptSet[i] = false;
 
-// Kaynak tepe noktasýnýn kendisinden uzaklýðý her zaman 0'dýr
-	dist[src] = 0;
+// Distance of source vertex from itself is always 0	dist[src] = 0;
 
-	// Tüm köþeler için en kýsa yolu bul
+	// Find the shortest path for all corners
 	for (int count = 0; count < V - 1; count++) {
-		// olmayan köþeler kümesinden minimum uzaklýk tepe noktasýný seçin
-// henüz iþlendi. u, ilk yinelemede her zaman src'ye eþittir.
+		// select minimum distance vertex from set of non-existent vertices
+// just processed. u is always equal to src in the first iteration.
 		int u = minDistance(dist, sptSet);
-// Tüm mesafeleri INFINITE olarak ve stpSet[]'i false olarak baþlat
-		// Seçilen tepe noktasýný iþlendi olarak iþaretle
+// Initialize all distances to INFINITE and stpSet[] to false
+// Mark the selected vertex as processed
 		sptSet[u] = true;
 
-		// Seçilen tepe noktasýnýn bitiþik köþelerinin dist deðerini güncelleyin.
+		// Update the dist value of adjacent vertices of the selected vertex.
 		for (int v = 0; v < V; v++)
 
-		// dist[v]'yi yalnýzca sptSet'te deðilse güncelleyin, buradan bir kenar varsa
-// u'dan v'ye ve src'den v'den u'ya giden yolun toplam aðýrlýðý
-// dist[v]'in geçerli deðerinden daha küçük
+		// update dist[v] only if not in sptSet, if there is an edge from there
+// total weight of path from u to v and src from v to u
+// less than current value of dist[v]
 			if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
 				&& dist[u] + graph[u][v] < dist[v])
 				dist[v] = dist[u] + graph[u][v];
 	}
 
-	// oluþturulan mesafe dizisini yazdýr
+	// print the generated distance array
 	printSolution(dist, V);
 }
 
-// yukarýdaki iþlevi test etmek için sürücü programý
+// driver program to test the above function
 int main()
 {
 		string satir1; string satir2; string satir3;string satir4;string satir5;string satir6;string satir7;
 		string sutun1;string sutun2;string sutun3;string sutun4;string sutun5;string sutun6;string sutun7;
-	    satir1=sutun1="Ev";
-	    satir2=sutun2="Beykoz Universitesi";
+	    satir1=sutun1="Home";
+	    satir2=sutun2="Beykoz Univercity";
 	    satir3=sutun3="Atasehir";
 	    satir4=sutun4="Kadikoy";
 	    satir5=sutun5="Uskudar";
