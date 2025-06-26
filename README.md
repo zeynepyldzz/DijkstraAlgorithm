@@ -1,15 +1,41 @@
-# Dijkstra Algorithm
+# Dijkstra Shortest Path Algorithm
 
-This project is an application written in C++ that finds shortest paths using Dijkstra algorithm. It works on a graph with 9 nodes in total.
+This project implements Dijkstra's algorithm to find the shortest path from a single source node to all other nodes in a weighted graph. The graph is represented using an adjacency matrix.
 
-## Starting Point
-Home (node 0)
+## Features
 
-## Tools Used
-- C++
-- Dev-C++
-- Git, GitHub
+- Calculates shortest distances from a given source node.
+- Works with weighted graphs having positive edge weights.
+- Prints the shortest distance from the source node to every other node.
 
- 
-![image](https://github.com/user-attachments/assets/04688a5a-c3a0-4b9b-9b65-ac06ac54c9d0)
+## Usage
 
+1. Update the adjacency matrix (`graph`) with your own graph data.
+2. Set the source node index in the `dijkstra` function call.
+3. Compile and run the program.
+
+```bash
+g++ dijkstra.cpp -o dijkstra
+./dijkstra
+
+Nodes in the Example
+Node Index	Location
+0	Gebze
+1	Kavacik
+2	Dudullu
+3	Hacihalil
+4	Kadikoy
+5	Umraniye
+6	Tuzla
+7	Darica
+8	Uskudar (Source)
+
+Notes
+Edge weights represent time in minutes between nodes.
+
+Make sure to provide a complete adjacency matrix (size NxN).
+
+License
+This project is open-source and free to use.
+
+![image](https://github.com/user-attachments/assets/f4592af4-c6ae-4709-8b1e-61dda7a88705)
