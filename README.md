@@ -13,7 +13,6 @@ This project implements Dijkstra's algorithm to find the shortest path from a si
 1. Update the adjacency matrix (`graph`) with your own graph data.
 2. Set the source node index in the `dijkstra` function call.
 3. Compile and run the program.
-
 ```bash
 g++ dijkstra.cpp -o dijkstra
 ./dijkstra
