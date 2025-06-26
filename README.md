@@ -12,4 +12,4 @@ Home (node 0)
 
  
 ![image](https://github.com/user-attachments/assets/04688a5a-c3a0-4b9b-9b65-ac06ac54c9d0)
-![image](https://github.com/user-attachments/assets/04688a5a-c3a0-4b9b-9b65-ac06ac54c9d0)
+
